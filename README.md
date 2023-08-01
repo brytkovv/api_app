@@ -1,24 +1,20 @@
-# README
+Создайте в корне .env файл, но, если честно, я захардкодил переменнные в конфигах. Он может быть пустым
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Почему-то у меня не получилось создать миграции из Dockerfile таким образом:
 
-Things you may want to cover:
+CMD ["rails", "db:create"]
+CMD ["rails", "db:migrate"]
+CMD ["rails", "db:seed"]
 
-* Ruby version
+Поэтому, заходим в контейнер и делаем в ручную
 
-* System dependencies
+docker compose exec api-app bash
 
-* Configuration
+rails db:create
+rails db:migrate
+rails db:seed (если есть необходимость)
 
-* Database creation
+Для проведения тестов: rspec spec
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Картинки я пока что не сделал
+Все проблемы что сейчас есть решаемы, просто не хватило времени на данный момент

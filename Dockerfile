@@ -14,10 +14,3 @@ RUN chmod 755 .
 EXPOSE 3000
 
 CMD ["rails", "server", "-b", "0.0.0.0"]
-
-#CMD ["rails", "db:create"]
-#CMD ["rails", "db:migrate"]
-#CMD ["rails", "db:seed"]
-
-#docker compose exec api-app bash
-
