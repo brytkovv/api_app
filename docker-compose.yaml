@@ -1,0 +1,51 @@
+version: '3.7'
+
+services:
+  redis:
+    build:
+      context: .
+      dockerfile: RedisDockerfile
+    env_file:
+      - .env
+    restart: on-failure
+    ports:
+      - "6378:6379"
+    networks:
+      - network
+  db:
+    container_name: db
+    image: postgres:14.5
+    environment:
+      POSTGRES_DB: "db"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - '5431:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks:
+      - network
+    restart: on-failure
+  api-app:
+    container_name: api-app
+    build: .
+    environment:
+      POSTGRES_DB: "db"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "3001:3000"
+    volumes:
+      - .:/api-app
+    depends_on:
+      - db
+      - redis
+    networks:
+      - network
+
+networks:
+  network:
+    driver: bridge
+
+volumes:
+  db:
