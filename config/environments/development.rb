@@ -18,7 +18,7 @@ Rails.application.configure do
   config.server_timing = true
 
   config.cache_store = :redis_cache_store, {
-    url: "redis://:redis@redis:6379/3",  # Set the URL to your Redis server.
+    url: "redis://:redis@localhost:6379/3",  # Set the URL to your Redis server.
     expires_in: 2.days.to_i           # Set the expiration time for cache entries.
   }
 

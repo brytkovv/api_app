@@ -6,10 +6,11 @@ class Post < ApplicationRecord
   validates :title, presence: true
   validates :text, presence: true
 
-  # has_one_attached :picture TODO: реализовать
+  has_one_attached :picture, dependent: :destroy#, optional: true
 
   after_create :increment_count
   after_destroy :decrement_count
+  # after_commit :decrement_count, on: [:destroy] # TODO: разорбраться
 
   def increment_count
     parent = user
@@ -18,6 +19,9 @@ class Post < ApplicationRecord
       parent = parent.user
     end
     parent.increment! :posts_count
+
+    # parent = user.ancestors.find { |ancestor| ancestor.is_a?(User) }
+    # parent.increment!(:posts_count) # TODO: изменить здесь и в комментах
   end
 
   def decrement_count
